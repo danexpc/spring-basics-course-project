@@ -8,8 +8,8 @@ public class Event {
     private String msg;
     private final Date date;
 
-    public Event() {
-        this.date = new Date();
+    public Event(Date date) {
+        this.date = date;
     }
 
     public int getId() {
