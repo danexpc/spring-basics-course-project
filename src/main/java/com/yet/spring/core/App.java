@@ -4,13 +4,15 @@ import com.yet.spring.core.beans.Client;
 import com.yet.spring.core.loggers.EventLogger;
 
 public class App {
-    private Client client;
-    private EventLogger eventLogger;
+    private final Client client;
+    private final EventLogger eventLogger;
+
+    public App (Client client, EventLogger eventLogger) {
+        this.client = client;
+        this.eventLogger = eventLogger;
+    }
 
     public static void main(String[] args) {
-        var app = new App();
-
-        app.logEvent("Some event for user 1");
     }
 
     public void logEvent(String msg) {
