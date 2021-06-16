@@ -28,9 +28,8 @@
         <constructor-arg value="./logs/test.log" />
     </bean>
 
-    <bean id="cacheFileEventLogger" class="com.yet.spring.core.loggers.CacheFileEventLogger" destroy-method="destroy">
-        <constructor-arg value="./logs/test.log" />
-        <constructor-arg value="5" />
+    <bean id="cacheFileEventLogger" class="com.yet.spring.core.loggers.CacheFileEventLogger" destroy-method="destroy" parent="fileEventLogger">
+        <constructor-arg value="10" />
     </bean>
 
     <bean id="app" class="com.yet.spring.core.App">
