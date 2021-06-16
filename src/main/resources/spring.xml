@@ -10,6 +10,7 @@
     <bean id="client" class="com.yet.spring.core.beans.Client">
         <constructor-arg value="1" />
         <constructor-arg value="John Smith" />
+        <property name="greeting" value="Hello there!" />
     </bean>
 
     <bean id="dateFormat" class="java.text.DateFormat" factory-method="getDateTimeInstance" />
