@@ -26,8 +26,14 @@ public class CacheFileEventLogger extends FileEventLogger {
     }
 
     private void writeEventsFromCache() {
-        for (Event event: cache) {
+        for (Event event : cache) {
             super.logEvent(event);
+        }
+    }
+
+    public void destroy() {
+        if (!cache.isEmpty()) {
+            writeEventsFromCache();
         }
     }
 }
