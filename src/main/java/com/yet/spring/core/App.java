@@ -25,6 +25,5 @@ public class App {
 
     public void logEvent(String msg) {
         var message = msg.replaceAll(String.valueOf(client.getId()), client.getFullName());
-        eventLogger.logEvent(message);
     }
 }
