@@ -7,10 +7,21 @@
 
     <import resource="loggers.xml" />
 
+    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+
+        <property name="locations">
+            <list>
+                <value>classpath:client.properties</value>
+            </list>
+        </property>
+
+        <property name="ignoreResourceNotFound" value="true"/>
+    </bean>
+
     <bean id="client" class="com.yet.spring.core.beans.Client">
-        <constructor-arg value="1" />
-        <constructor-arg value="John Smith" />
-        <property name="greeting" value="Hello there!" />
+        <constructor-arg value="${id}" />
+        <constructor-arg value="${name}" />
+        <property name="greeting" value="${greeting}" />
     </bean>
 
     <bean id="dateFormat" class="java.text.DateFormat" factory-method="getDateTimeInstance" />
