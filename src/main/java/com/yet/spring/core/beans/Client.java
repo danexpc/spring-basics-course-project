@@ -5,6 +5,7 @@ import java.util.Objects;
 public class Client {
     private int id;
     private String fullName;
+    private String greeting;
 
     public Client() {}
 
@@ -29,17 +30,25 @@ public class Client {
         this.fullName = fullName;
     }
 
+    public String getGreeting() {
+        return greeting;
+    }
+
+    public void setGreeting(String greeting) {
+        this.greeting = greeting;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         var client = (Client) o;
-        return id == client.id && Objects.equals(fullName, client.fullName);
+        return id == client.id && Objects.equals(fullName, client.fullName) && Objects.equals(greeting, client.greeting);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, fullName);
+        return Objects.hash(id, fullName, greeting);
     }
 
     @Override
@@ -47,6 +56,7 @@ public class Client {
         return "Client{" +
                 "id=" + id +
                 ", fullName='" + fullName + '\'' +
+                ", greeting='" + greeting + '\'' +
                 '}';
     }
 }
