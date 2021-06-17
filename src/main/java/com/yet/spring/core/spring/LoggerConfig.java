@@ -43,13 +43,8 @@ public class LoggerConfig {
     @Bean
     public Map<EventType, EventLogger> loggerMap() {
         Map<EventType, EventLogger> map = new EnumMap<>(EventType.class);
-        map.put(EventType.INFO, combinedEventLogger);
+        map.put(EventType.INFO, consoleEventLogger);
         map.put(EventType.ERROR, combinedEventLogger);
         return map;
-    }
-
-    @Bean
-    public EventLogger defaultLogger() {
-        return cacheEventLogger;
     }
 }

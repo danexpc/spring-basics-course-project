@@ -7,6 +7,7 @@ import com.yet.spring.core.loggers.EventLogger;
 import com.yet.spring.core.spring.AppConfig;
 import com.yet.spring.core.spring.LoggerConfig;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +18,21 @@ import java.util.Map;
 public class App {
 
     @Autowired
-    private final Client client;
+    private Client client;
 
-    @Resource(name = "defaultLogger")
-    private final EventLogger defaultLogger;
+    @Value("#{ T(com.yet.spring.core.beans.Event).isDay(8, 17) ? "
+            + "cacheEventLogger : consoleEventLogger }")
+    private EventLogger defaultLogger;
 
     @Resource(name = "loggerMap")
-    private final Map<EventType, EventLogger> loggers;
+    private Map<EventType, EventLogger> loggers;
+
+    @Value("#{'Hello user ' + "
+            + "(systemProperties['os.name'].contains('Windows') ? "
+            + "systemEnvironment['USERNAME'] : systemEnvironment['USER'])}")
+    private String startupMessage;
+
+    public App() {}
 
     public App(Client client, EventLogger defaultLogger, Map<EventType, EventLogger> loggers) {
         this.client = client;
@@ -35,6 +44,8 @@ public class App {
         var ctx = new AnnotationConfigApplicationContext(AppConfig.class, LoggerConfig.class);
 
         var app = (App) ctx.getBean("app");
+
+        System.out.println(app.startupMessage);
 
         var client = ctx.getBean(Client.class);
         System.out.println("Client says: " + client.getGreeting());
@@ -62,5 +73,9 @@ public class App {
         }
 
         logger.logEvent(event);
+    }
+
+    public EventLogger getDefaultLogger() {
+        return defaultLogger;
     }
 }
