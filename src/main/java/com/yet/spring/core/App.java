@@ -4,25 +4,40 @@ import com.yet.spring.core.beans.Client;
 import com.yet.spring.core.beans.Event;
 import com.yet.spring.core.beans.EventType;
 import com.yet.spring.core.loggers.EventLogger;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import com.yet.spring.core.spring.AppConfig;
+import com.yet.spring.core.spring.LoggerConfig;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Map;
 
+@Service
 public class App {
+
+    @Autowired
     private final Client client;
+
+    @Resource(name = "defaultLogger")
     private final EventLogger defaultLogger;
+
+    @Resource(name = "loggerMap")
     private final Map<EventType, EventLogger> loggers;
 
-    public App(Client client, EventLogger eventLogger, Map<EventType, EventLogger> loggers) {
+    public App(Client client, EventLogger defaultLogger, Map<EventType, EventLogger> loggers) {
         this.client = client;
-        this.defaultLogger = eventLogger;
+        this.defaultLogger = defaultLogger;
         this.loggers = loggers;
     }
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+        var ctx = new AnnotationConfigApplicationContext(AppConfig.class, LoggerConfig.class);
+
         var app = (App) ctx.getBean("app");
+
+        var client = ctx.getBean(Client.class);
+        System.out.println("Client says: " + client.getGreeting());
 
         var event = ctx.getBean(Event.class);
         app.logEvent(EventType.INFO, event, "Some event for 1");

@@ -1,18 +1,30 @@
 package com.yet.spring.core.beans;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Random;
 
+@Component
+@Scope("prototype")
 public class Event {
     private final int id = new Random().nextInt();
     private String msg;
+
+    @Autowired
+    @Qualifier("newDate")
     private final Date date;
-    private final DateFormat df;
+
+    @Autowired
+    private final DateFormat dateFormat;
 
     public Event(Date date, DateFormat df) {
         this.date = date;
-        this.df = df;
+        this.dateFormat = df;
     }
 
     public int getId() {
@@ -36,7 +48,7 @@ public class Event {
         return "Event{" +
                 "id=" + id +
                 ", msg='" + msg + '\'' +
-                ", date=" + df.format(date) +
+                ", date=" + (dateFormat != null ? dateFormat.format(date) : date) +
                 '}';
     }
 }
