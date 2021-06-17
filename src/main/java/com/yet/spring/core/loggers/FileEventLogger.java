@@ -12,10 +12,13 @@ import java.io.IOException;
 @Component("fileEventLogger")
 public class FileEventLogger implements EventLogger {
 
-    @Value("logs/test.log")
-    private String filename;
+    private final String filename;
 
     private File file;
+
+    public FileEventLogger(@Value("logs/test.log") String filename) {
+        this.filename = filename;
+    }
 
     @PostConstruct
     public void init() throws IOException {

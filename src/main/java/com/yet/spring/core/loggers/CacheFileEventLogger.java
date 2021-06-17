@@ -12,9 +12,14 @@ import java.util.List;
 @Component("cacheEventLogger")
 public class CacheFileEventLogger extends FileEventLogger {
 
-    @Value("${cache.size:5}")
-    private int cacheSize;
+    private final int cacheSize;
+
     private List<Event> cache;
+
+    public CacheFileEventLogger(@Value("logs/test.log") String filename, @Value("${cache.size:5}") Integer cacheSize) {
+        super(filename);
+        this.cacheSize = cacheSize;
+    }
 
     @Override
     public void logEvent(Event event) {
