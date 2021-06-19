@@ -1,10 +1,7 @@
 package com.yet.spring.core.aspects;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
 @Aspect
@@ -19,6 +16,7 @@ public class LoggingAspect {
     private void logEventInsideFileLoggers() {
     }
 
+    @Before("allLogEventMethods()")
     public void logBefore(JoinPoint joinPoint) {
         System.out.println("BEFORE: " + joinPoint.getTarget()
                 .getClass().getSimpleName()
