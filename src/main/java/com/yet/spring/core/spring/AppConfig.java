@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.util.Date;
 
 @Configuration
+@EnableAspectJAutoProxy
 @PropertySource("classpath:client.properties")
 @ComponentScan("com.yet.spring.core")
 public class AppConfig {
