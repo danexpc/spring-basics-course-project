@@ -18,7 +18,6 @@ import java.util.Map;
 @Service
 public class App {
 
-    @Autowired
     private Client client;
 
     @Value("#{ T(com.yet.spring.core.beans.Event).isDay(8, 17) ? "
@@ -33,7 +32,6 @@ public class App {
             + "systemEnvironment['USERNAME'] : systemEnvironment['USER'])}")
     private String startupMessage;
 
-    @Autowired
     private StatisticsAspect statisticsAspect;
 
     public App() {}
@@ -42,6 +40,12 @@ public class App {
         this.client = client;
         this.defaultLogger = defaultLogger;
         this.loggers = loggers;
+    }
+
+    @Autowired
+    public App(Client client, StatisticsAspect statisticsAspect) {
+        this.client = client;
+        this.statisticsAspect = statisticsAspect;
     }
 
     public static void main(String[] args) {
